@@ -16,7 +16,11 @@ RUN go build \
 ###multi-stage build
 FROM scratch
 
+ENV GIN_MODE release
+
 COPY --from=build /app/api-golang api-golang
+
+EXPOSE 8080
 
 CMD ["/api-golang"] 
 #with this the change is, we don't need to build the app cause it is already build
