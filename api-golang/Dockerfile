@@ -25,7 +25,11 @@ FROM scratch
 # Set gin mode
 ENV GIN_MODE release
 
+COPY --from=build /etc/passwd /etc/passwd
+
 COPY --from=build /app/api-golang api-golang
+
+USER nonroot
 
 EXPOSE 8080
 
