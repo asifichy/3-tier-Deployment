@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine-buster as build
+FROM golang:1.19-buster as build
 
 WORKDIR /app
 
