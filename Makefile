@@ -29,7 +29,7 @@ docker-build-all:
 
 	docker build -t api-node -f ${DOCKERFILE_DIR}/api-node/Dockerfile.apinode ${DOCKERCONTEXT_DIR}/api-node/
 
-	docker build -t api-golang -f ${DOCKERFILE_DIR}/api-golang/Dockerfile.6 ${DOCKERCONTEXT_DIR}/api-golang/
+	docker build -t api-golang -f ${DOCKERFILE_DIR}/api-golang/Dockerfile.apigolang ${DOCKERCONTEXT_DIR}/api-golang/
 
 DATABASE_URL:=postgres://postgres:foobarbaz@db:5432/postgres
 
@@ -102,18 +102,6 @@ docker-rm:
 	-docker network rm my-network
 
 define DOCKER_COMPOSE_NOTE
-
-🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
-
-❯ NOTE:
-
-This command runs the example app with a bunch
-of individual docker run commands. This is much
-easier to manage with docker-compose (see 
-docker-compose.yml and compose make targets above)
-
-🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨🚨
-
 
 endef
 export DOCKER_COMPOSE_NOTE
