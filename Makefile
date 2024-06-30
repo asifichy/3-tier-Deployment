@@ -75,12 +75,14 @@ docker-run-all:
 		-v ${PWD}/client-react/vite.config.js:/usr/src/app/vite.config.js \
 		-p 5173:5173 \
 		--restart unless-stopped \
+		--link=api-node
+		--link=api-golang
 		client-react-vite
 
 	docker run -d \
 		--name client-react-nginx \
 		--network my-network \
-		-p 80:8080 \
+		-p 5174:80 \
 		--restart unless-stopped \
 		client-react-ngnix
 
