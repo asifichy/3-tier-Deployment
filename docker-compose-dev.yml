@@ -30,14 +30,19 @@ services:
       - 8080:8080
     restart: unless-stopped
   api-node:
-    labels:
-      shipyard.route: '/api/node/'
-      shipyard.route.rewrite: true
     image: api-node
     build:
       context: ../api-node/
-      dockerfile: ../api-node/Dockerfile.7
+      dockerfile: ../api-node/Dockerfile.8
+      target: dev 
     init: true
+    volumes:
+      - type: bind
+        source: ../api-node/
+        target: /usr/src/app/
+      - type: volume
+        target: /usr/src/app/node_modules
+      - type: bind
     depends_on:
       - db
     environment:
