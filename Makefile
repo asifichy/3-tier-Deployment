@@ -3,10 +3,12 @@
 .PHONY: compose-build
 compose-build:
 	docker compose build
+###to build docker compose
 
 .PHONY: compose-up
 compose-up:
 	docker compose up
+###to run the containers/images use docker compose
 
 .PHONY: compose-up-build
 compose-up-build:
