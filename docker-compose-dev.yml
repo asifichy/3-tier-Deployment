@@ -40,9 +40,8 @@ services:
       - type: bind
         source: ../api-node/
         target: /usr/src/app/
-      - type: volume
+      - type: volume 
         target: /usr/src/app/node_modules
-      - type: bind
     depends_on:
       - db
     environment:
