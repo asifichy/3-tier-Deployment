@@ -86,6 +86,8 @@ docker-run-all:
 		--network my-network \
 		-p 5174:8080 \
 		--restart unless-stopped \
+		--link=api-node \
+		--link=api-golang \
 		client-react-ngnix
 
 .PHONY: docker-stop
