@@ -1,14 +1,13 @@
-version: "3.9"
 services:
   client-react-vite:
     image: client-react-vite
     build:
-      context: ../3-tier-deployment/client-react/
+      context: ../client-react/
       dockerfile: ../client-react/Dockerfile.3
     init: true
     volumes:
       - type: bind
-        source: $(PWD)/client-react/
+        source: ../client-react/
         target: /usr/src/app/
       - type: volume
         target: /usr/src/app/node_modules
@@ -20,12 +19,9 @@ services:
     ports:
       - 5173:5173
   client-react-nginx:
-    labels:
-      shipyard.primary-route: true
-      shipyard.route: '/'
     image: client-react-nginx
     build:
-      context: ../3-tier-deployment/client-react/
+      context: ../client-react/
       dockerfile: ../client-react/Dockerfile.5
     init: true
     networks:
@@ -39,7 +35,7 @@ services:
       shipyard.route.rewrite: true
     image: api-node
     build:
-      context: ../3-tier-deployment/api-node/
+      context: ../api-node/
       dockerfile: ../api-node/Dockerfile.7
     init: true
     depends_on:
@@ -58,7 +54,7 @@ services:
       shipyard.route.rewrite: true
     image: api-golang
     build:
-      context: ../3-tier-deployment/api-golang/
+      context: ../api-golang/
       dockerfile: ../api-golang/Dockerfile.6
     init: true
     depends_on:

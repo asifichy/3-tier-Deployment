@@ -9,22 +9,18 @@ compose-build:
 	docker compose -f $(DEV_COMPOSE_FILE) build
 
 .PHONY: compose-up
-
 compose-up:
 	docker compose -f $(DEV_COMPOSE_FILE) up
 
 .PHONY: compose-up-build
-
 compose-up-build:
 	docker compose -f $(DEV_COMPOSE_FILE) up --build
 
 .PHONY: compose-up-debug-build
-
 compose-up-debug-build:
 	docker compose -f $(DEV_COMPOSE_FILE) -f $(DEBUG_COMPOSE_FILE) up --build
 
 .PHONY: compose-down
-
 compose-down:
 	docker compose -f $(DEV_COMPOSE_FILE) down
 
@@ -118,6 +114,11 @@ docker-rm:
 	-docker container rm client-react-vite
 	-docker container rm client-react-nginx
 	-docker network rm my-network
+	
+###.PHONY: run-tests
+###run-tests:
+###	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-golang
+###	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-node
 
 define DOCKER_COMPOSE_NOTE
 
