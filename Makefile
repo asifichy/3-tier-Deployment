@@ -74,7 +74,7 @@ docker-run-all:
 	docker run -d \
 		--name client-react-vite \
 		--network my-network \
-		-v $(PWD)/client-react/vite.config.js:/usr/src/app/vite.config.js \
+		-v "$(PWD)/client-react/vite.config.js:/usr/src/app/vite.config.js" \
 		-p 5173:5173 \
 		--restart unless-stopped \
 		--link=api-node \
