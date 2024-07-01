@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   client-react-vite:
     image: client-react-vite
@@ -6,7 +7,14 @@ services:
       dockerfile: ../client-react/Dockerfile.3
     init: true
     volumes:
-      - ./client-react/vite.config.js:/usr/src/app/vite.config.js
+      - type: bind
+        source: $(PWD)/client-react/
+        target: /usr/src/app/
+      - type: volume
+        target: /usr/src/app/node_modules
+      - type: bind
+        source: ../client-react/vite.config.js
+        target: /usr/src/app/vite.config.js
     networks:
       - frontend
     ports:
