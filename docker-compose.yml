@@ -23,7 +23,7 @@ services:
     networks:
       - frontend
     ports:
-      - 80:8080
+      - 8080:8080
     restart: unless-stopped
   api-node:
     labels:
@@ -61,7 +61,7 @@ services:
       - frontend
       - backend
     ports:
-      - 8080:8080
+      - 5000:5000
     restart: unless-stopped
   db:
     image: postgres:15.1-alpine

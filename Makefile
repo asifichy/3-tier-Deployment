@@ -68,7 +68,7 @@ docker-run-all:
 		--name api-golang \
 		--network my-network \
 		-e DATABASE_URL=${DATABASE_URL} \
-		-p 8080:8080 \
+		-p 5000:5000 \
 		--restart unless-stopped \
 		--link=db \
 		api-golang
