@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   client-react-vite:
     image: client-react-vite
@@ -30,37 +32,39 @@ services:
       - 8080:8080
     restart: unless-stopped
   api-node:
-    image: api-node
-    build:
-      context: ../api-node/
-      dockerfile: ../api-node/Dockerfile.8
-      target: dev 
-    init: true
-    volumes:
-      - type: bind
-        source: ../api-node/
-        target: /usr/src/app/
-      - type: volume 
-        target: /usr/src/app/node_modules
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
-    networks:
-      - frontend
-      - backend
-    ports:
-      - 3000:3000
-    restart: unless-stopped
+  image: api-node
+  build:
+    context: "D:\\Asif\\docker learning\\api-node"
+    dockerfile: "D:\\Asif\\docker learning\\api-node\\Dockerfile.7"
+    target: dev 
+  init: true
+  volumes:
+    - type: bind
+      source: "D:\\Asif\\docker learning\\api-node"
+      target: /usr/src/app/
+    - type: volume 
+      target: /usr/src/app/node_modules
+  depends_on:
+    - db
+  environment:
+    - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+  networks:
+    - frontend
+    - backend
+  ports:
+    - 3000:3000
+  restart: unless-stopped
   api-golang:
-    labels:
-      shipyard.route: '/api/golang/'
-      shipyard.route.rewrite: true
     image: api-golang
     build:
       context: ../api-golang/
       dockerfile: ../api-golang/Dockerfile.6
+      target: dev
     init: true
+    volumes:
+      - type: bind
+        source: ../api-golang/
+        target: /app/
     depends_on:
       - db
     environment:

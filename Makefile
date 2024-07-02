@@ -1,5 +1,5 @@
-#DEV_COMPOSE_FILE=docker-compose-dev.yml \
-DEBUG_COMPOSE_FILE=docker-compose-debug.yml \
+DEV_COMPOSE_FILE=docker-compose-dev.yml 
+DEBUG_COMPOSE_FILE=docker-compose-debug.yml 
 TEST_COMPOSE_FILE=docker-compose-test.yml
 
 ### DOCKER COMPOSE COMMANDS 
@@ -132,11 +132,12 @@ docker-rm:
 	-docker container rm client-react-vite
 	-docker container rm client-react-nginx
 	-docker network rm my-network
-	
-.PHONY: run-tests
-run-tests:
-	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-golang
-	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-node
+
+# \
+.PHONY: run-tests \
+run-tests: \
+	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-golang \
+	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-node \
 
 define DOCKER_COMPOSE_NOTE
 
