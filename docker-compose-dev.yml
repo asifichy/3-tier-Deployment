@@ -21,6 +21,9 @@ services:
     restart: unless-stopped
 
   client-react-nginx:
+    labels:
+      shipyard.primary-route: true
+      shipyard.route: '/'
     image: client-react-nginx
     build:
       context: "D:/Asif/docker learning/3-tier-deployment/client-react/"
@@ -33,6 +36,9 @@ services:
     restart: unless-stopped
 
   api-node:
+    labels:
+      shipyard.route: '/api/node/'
+      shipyard.route.rewrite: true
     image: api-node
     build:
       context: "D:/Asif/docker learning/3-tier-deployment/api-node/"
@@ -58,6 +64,9 @@ services:
 
   api-golang:
     image: api-golang
+    labels:
+      shipyard.route: '/api/golang/'
+      shipyard.route.rewrite: true
     build:
       context: "D:/Asif/docker learning/3-tier-deployment/api-golang/"
       dockerfile: "D:/Asif/docker learning/3-tier-deployment/api-golang/Dockerfile.6"
