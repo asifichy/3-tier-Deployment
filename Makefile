@@ -133,11 +133,11 @@ docker-rm:
 	-docker container rm client-react-nginx
 	-docker network rm my-network
 
-# \
-.PHONY: run-tests \
-run-tests: \
-	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-golang \
-	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-node \
+
+.PHONY: run-tests 
+run-tests: 
+	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-golang 
+	docker compose -f $(DEV_COMPOSE_FILE) -f $(TEST_COMPOSE_FILE) run --build api-node 
 
 define DOCKER_COMPOSE_NOTE
 

@@ -19,7 +19,7 @@ function CurrentTime(props) {
         .then((res) => res.data),
   });
 
-  if (isLoading) return `Loading ${props.api}... `;
+  if (isLoading) return `Loading ${props.api}...  `;
 
   if (error) return "An error has occurred: " + error.message;
 
