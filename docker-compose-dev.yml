@@ -81,7 +81,7 @@ services:
   db:
     image: postgres:15.1-alpine
     volumes:
-      - pgdata:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=foobarbaz
     networks:
@@ -91,7 +91,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  pgdata:
+  postgres-data:
 
 networks:
   frontend:
