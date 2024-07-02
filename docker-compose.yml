@@ -1,0 +1,107 @@
+services:
+  client-react-vite:
+    image: client-react-vite
+    build:
+      context: "D:/Asif/docker learning/3-tier-deployment/client-react/"
+      dockerfile: "D:/Asif/docker learning/3-tier-deployment/client-react/Dockerfile.3"
+    init: true
+    volumes:
+      - type: bind
+        source: "D:/Asif/docker learning/3-tier-deployment/client-react/"
+        target: /usr/src/app/
+      - type: volume
+        target: /usr/src/app/node_modules
+      - type: bind
+        source: "D:/Asif/docker learning/3-tier-deployment/client-react/vite.config.js"
+        target: /usr/src/app/vite.config.js
+    networks:
+      - frontend
+    ports:
+      - 5173:5173
+    restart: unless-stopped
+
+  client-react-nginx:
+    labels:
+      shipyard.primary-route: true
+      shipyard.route: '/'
+    image: client-react-nginx
+    build:
+      context: "D:/Asif/docker learning/3-tier-deployment/client-react/"
+      dockerfile: "D:/Asif/docker learning/3-tier-deployment/client-react/Dockerfile.5"
+    init: true
+    networks:
+      - frontend
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+
+  api-node:
+    labels:
+      shipyard.route: '/api/node/'
+      shipyard.route.rewrite: true
+    image: api-node
+    build:
+      context: "D:/Asif/docker learning/3-tier-deployment/api-node/"
+      dockerfile: "D:/Asif/docker learning/3-tier-deployment/api-node/Dockerfile.7"
+      target: dev 
+    init: true
+    volumes:
+      - type: bind
+        source: "D:/Asif/docker learning/3-tier-deployment/api-node/"
+        target: /usr/src/app/
+      - type: volume 
+        target: /usr/src/app/node_modules
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+    networks:
+      - frontend
+      - backend
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+
+  api-golang:
+    image: api-golang
+    labels:
+      shipyard.route: '/api/golang/'
+      shipyard.route.rewrite: true
+    build:
+      context: "D:/Asif/docker learning/3-tier-deployment/api-golang/"
+      dockerfile: "D:/Asif/docker learning/3-tier-deployment/api-golang/Dockerfile.6"
+      target: dev
+    init: true
+    volumes:
+      - type: bind
+        source: "D:/Asif/docker learning/3-tier-deployment/api-golang/"
+        target: /app/
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+    networks:
+      - frontend
+      - backend
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+
+  db:
+    image: postgres:15.1-alpine
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=foobarbaz
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+
+networks:
+  frontend:
+  backend:
