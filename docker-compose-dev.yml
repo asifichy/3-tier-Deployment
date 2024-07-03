@@ -2,17 +2,17 @@ services:
   client-react-vite:
     image: client-react-vite
     build:
-      context: "/3-tier-deployment/client-react/"
-      dockerfile: "/3-tier-deployment/client-react/Dockerfile.3"
+      context: "${PROJECT_ROOT}/client-react"
+      dockerfile: "${PROJECT_ROOT}/client-react/Dockerfile.3"
     init: true
     volumes:
       - type: bind
-        source: "/3-tier-deployment/client-react/"
-        target: /usr/src/app/
+        source: "${PROJECT_ROOT}/client-react"
+        target: /usr/src/app
       - type: volume
         target: /usr/src/app/node_modules
       - type: bind
-        source: "/3-tier-deployment/client-react/vite.config.js"
+        source: "${PROJECT_ROOT}/client-react/vite.config.js"
         target: /usr/src/app/vite.config.js
     networks:
       - frontend
@@ -26,8 +26,8 @@ services:
       shipyard.route: '/'
     image: client-react-nginx
     build:
-      context: "/3-tier-deployment/client-react/"
-      dockerfile: "/3-tier-deployment/client-react/Dockerfile.5"
+      context: "${PROJECT_ROOT}/client-react"
+      dockerfile: "${PROJECT_ROOT}/client-react/Dockerfile.5"
     init: true
     networks:
       - frontend
@@ -41,20 +41,20 @@ services:
       shipyard.route.rewrite: true
     image: api-node
     build:
-      context: "/3-tier-deployment/api-node/"
-      dockerfile: "/3-tier-deployment/api-node/Dockerfile.7"
+      context: "${PROJECT_ROOT}/api-node"
+      dockerfile: "${PROJECT_ROOT}/api-node/Dockerfile.7"
       target: dev 
     init: true
     volumes:
       - type: bind
-        source: "/3-tier-deployment/api-node/"
-        target: /usr/src/app/
+        source: "${PROJECT_ROOT}/api-node"
+        target: /usr/src/app
       - type: volume 
         target: /usr/src/app/node_modules
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+      - DATABASE_URL=${DATABASE_URL}
     networks:
       - frontend
       - backend
@@ -68,18 +68,18 @@ services:
       shipyard.route: '/api/golang/'
       shipyard.route.rewrite: true
     build:
-      context: "/3-tier-deployment/api-golang/"
-      dockerfile: "/3-tier-deployment/api-golang/Dockerfile.6"
+      context: "${PROJECT_ROOT}/api-golang"
+      dockerfile: "${PROJECT_ROOT}/api-golang/Dockerfile.6"
       target: dev
     init: true
     volumes:
       - type: bind
-        source: "/3-tier-deployment/api-golang/"
-        target: /app/
+        source: "${PROJECT_ROOT}/api-golang"
+        target: /app
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgres://postgres:foobarbaz@db:5432/postgres
+      - DATABASE_URL=${DATABASE_URL}
     networks:
       - frontend
       - backend
@@ -92,7 +92,7 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=foobarbaz
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - backend
     ports:
