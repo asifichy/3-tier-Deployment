@@ -1,5 +1,5 @@
 ```
-# Sample web application
+# Sample web application deployment using Docker
 
 ![](./readme-assets/app-screenshot.png)
 
