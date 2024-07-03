@@ -6,23 +6,23 @@ TEST_COMPOSE_FILE=docker-compose-test.yml
 
 .PHONY: compose-build  
 compose-build: 
-	docker compose -f $(DEV_COMPOSE_FILE) build 
+	docker compose -f $(PROJECT_ROOT)/$(DEV_COMPOSE_FILE) build 
 
 .PHONY: compose-up 
 compose-up: 
-	docker compose -f $(DEV_COMPOSE_FILE) up 
+	docker compose -f $(PROJECT_ROOT)/$(DEV_COMPOSE_FILE) up 
 
 .PHONY: compose-up-build 
 compose-up-build: 
-	docker compose -f $(DEV_COMPOSE_FILE) up --build 
+	docker compose -f $(PROJECT_ROOT)/$(DEV_COMPOSE_FILE) up --build 
 
 .PHONY: compose-up-debug-build 
 compose-up-debug-build: 
-	docker compose -f $(DEV_COMPOSE_FILE) -f $(DEBUG_COMPOSE_FILE) up --build 
+	docker compose -f $(PROJECT_ROOT)/$(DEV_COMPOSE_FILE) -f $(PROJECT_ROOT)/$(DEBUG_COMPOSE_FILE) up --build 
 
 .PHONY: compose-down 
 compose-down:
-	docker compose -f $(DEV_COMPOSE_FILE) down
+	docker compose -f $(PROJECT_ROOT)/$(DEV_COMPOSE_FILE) down
 
 
 # to build image as basic \
@@ -49,13 +49,13 @@ DOCKERFILE_DIR:=../3-tier-deployment/
 
 .PHONY: docker-build-all
 docker-build-all:
-	docker build --no-cache -t client-react-vite -f ${DOCKERFILE_DIR}/client-react/Dockerfile.3 ${DOCKERCONTEXT_DIR}/client-react/
+	docker build --no-cache -t client-react-vite -f $(PROJECT_ROOT)/${DOCKERFILE_DIR}/client-react/Dockerfile.3 $(PROJECT_ROOT)/${DOCKERCONTEXT_DIR}/client-react/
 
-	docker build --no-cache -t client-react-ngnix -f ${DOCKERFILE_DIR}/client-react/Dockerfile.5 ${DOCKERCONTEXT_DIR}/client-react/
+	docker build --no-cache -t client-react-ngnix -f $(PROJECT_ROOT)/${DOCKERFILE_DIR}/client-react/Dockerfile.5 $(PROJECT_ROOT)/${DOCKERCONTEXT_DIR}/client-react/
 
-	docker build --no-cache -t api-node -f ${DOCKERFILE_DIR}/api-node/Dockerfile.7 ${DOCKERCONTEXT_DIR}/api-node/
+	docker build --no-cache -t api-node -f $(PROJECT_ROOT)/${DOCKERFILE_DIR}/api-node/Dockerfile.7 $(PROJECT_ROOT)/${DOCKERCONTEXT_DIR}/api-node/
 
-	docker build --no-cache -t api-golang -f ${DOCKERFILE_DIR}/api-golang/Dockerfile.6 ${DOCKERCONTEXT_DIR}/api-golang/
+	docker build --no-cache -t api-golang -f $(PROJECT_ROOT)/${DOCKERFILE_DIR}/api-golang/Dockerfile.6 $(PROJECT_ROOT)/${DOCKERCONTEXT_DIR}/api-golang/
 
 DATABASE_URL:=postgres://postgres:foobarbaz@db:5432/postgres
 
