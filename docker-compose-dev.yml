@@ -2,17 +2,17 @@ services:
   client-react-vite:
     image: client-react-vite
     build:
-      context: "./client-react"
-      dockerfile: "./client-react/Dockerfile.3"
+      context: "${PROJECT_ROOT}/client-react"
+      dockerfile: "${PROJECT_ROOT}/client-react/Dockerfile.3"
     init: true
     volumes:
       - type: bind
-        source: "./client-react"
+        source: "${PROJECT_ROOT}/client-react"
         target: /usr/src/app
       - type: volume
         target: /usr/src/app/node_modules
       - type: bind
-        source: "./client-react/vite.config.js"
+        source: "${PROJECT_ROOT}/client-react/vite.config.js"
         target: /usr/src/app/vite.config.js
     networks:
       - frontend
@@ -26,8 +26,8 @@ services:
       shipyard.route: '/'
     image: client-react-nginx
     build:
-      context: "./client-react"
-      dockerfile: "./client-react/Dockerfile.5"
+      context: "${PROJECT_ROOT}/client-react"
+      dockerfile: "${PROJECT_ROOT}/client-react/Dockerfile.5"
     init: true
     networks:
       - frontend
@@ -41,13 +41,13 @@ services:
       shipyard.route.rewrite: true
     image: api-node
     build:
-      context: "./api-node"
-      dockerfile: "./api-node/Dockerfile.7"
+      context: "${PROJECT_ROOT}/api-node"
+      dockerfile: "${PROJECT_ROOT}/api-node/Dockerfile.7"
       target: dev 
     init: true
     volumes:
       - type: bind
-        source: "./api-node"
+        source: "${PROJECT_ROOT}/api-node"
         target: /usr/src/app
       - type: volume 
         target: /usr/src/app/node_modules
@@ -68,13 +68,13 @@ services:
       shipyard.route: '/api/golang/'
       shipyard.route.rewrite: true
     build:
-      context: "./api-golang"
-      dockerfile: "./api-golang/Dockerfile.6"
+      context: "${PROJECT_ROOT}/api-golang"
+      dockerfile: "${PROJECT_ROOT}/api-golang/Dockerfile.6"
       target: dev
     init: true
     volumes:
       - type: bind
-        source: "./api-golang"
+        source: "${PROJECT_ROOT}/api-golang"
         target: /app
     depends_on:
       - db
