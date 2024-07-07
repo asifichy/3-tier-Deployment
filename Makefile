@@ -26,7 +26,7 @@ compose-up-debug-build:
 
 .PHONY: compose-down 
 compose-down:
-	docker compose -f $(DEV_COMPOSE_FILE) down
+	docker compose  --env-file .env -f $(DEV_COMPOSE_FILE) down
 
 
 # to build image as basic \
